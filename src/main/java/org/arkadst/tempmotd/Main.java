@@ -14,6 +14,9 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (!getDataFolder().exists()){
+            getDataFolder().mkdir();
+        }
         motdtxtReload();
 
         getServer().getPluginManager().registerEvents(new EventListener(), this);
