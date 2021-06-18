@@ -1,0 +1,15 @@
+name: TempMOTD
+author: ArkadSt
+version: 1.0
+main: org.arkadst.tempmotd.Main
+api-version: 1.16
+
+commands:
+  tempmotd:
+    description: "TempMOTD provided command."
+    permission: tempmotd.admin
+  setmotd:
+    description: "TempMOTD provided command."
+    usage: "§cUsage: /setmotd motd"
+    permission: tempmotd.admin
+
