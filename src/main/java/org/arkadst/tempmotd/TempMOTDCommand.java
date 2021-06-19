@@ -21,7 +21,7 @@ public class TempMOTDCommand implements CommandExecutor {
                 case "reload":
                     main.reloadConfig();
                     Main.config = main.getConfig();
-                    sender.sendMessage(ChatColor.GREEN + "[TempMOTD] motd.txt was reloaded successfully");
+                    sender.sendMessage(ChatColor.GREEN + "[TempMOTD] Configuration was reloaded successfully.");
                     break;
                 default:
                     sender.sendMessage(ChatColor.RED + "[TempMOTD] No such command.");
