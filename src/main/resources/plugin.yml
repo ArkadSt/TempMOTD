@@ -10,6 +10,6 @@ commands:
     permission: tempmotd.admin
   setmotd:
     description: "TempMOTD provided command."
-    usage: "§cUsage: /setmotd motd"
+    usage: "§cUsage: /setmotd ROW(1 or 2) text"
     permission: tempmotd.admin
 

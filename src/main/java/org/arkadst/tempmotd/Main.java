@@ -2,22 +2,19 @@ package org.arkadst.tempmotd;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Main extends JavaPlugin {
 
-    public static String MOTD;
-    public File motdtxt;
+    public static FileConfiguration config;
 
     @Override
     public void onEnable() {
-        if (!getDataFolder().exists()){
-            getDataFolder().mkdir();
+        if (!(new File(getDataFolder(), "config.yml")).exists()) {
+            saveDefaultConfig();
         }
-        motdtxtReload();
+
+        config = getConfig();
 
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
@@ -30,18 +27,4 @@ public class Main extends JavaPlugin {
 
     }
 
-    public void motdtxtReload(){
-        motdtxt = new File(getDataFolder(), "motd.txt");
-        MOTD = "";
-
-        try {
-            Scanner motd_reader = new Scanner(motdtxt);
-            while (motd_reader.hasNextLine()) {
-                MOTD += motd_reader.nextLine();
-            }
-            motd_reader.close();
-        } catch (FileNotFoundException e) {
-            getLogger().info("motd.txt does not exist.");
-        }
-    }
 }

@@ -8,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SetMOTDCommand implements CommandExecutor {
 
@@ -19,31 +21,32 @@ public class SetMOTDCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
-            if (args.length >= 1){
-                StringBuilder message = new StringBuilder();
-                for (int x = 0; x < args.length; x++){
-                    message.append(args[x]);
-                    if (x != args.length - 1){
-                        message.append(" ");
-                    }
+        if (args.length >= 1) {
+            StringBuilder message = new StringBuilder();
+            for (int x = 1; x < args.length; x++) {
+                message.append(args[x]);
+                if (x != args.length - 1) {
+                    message.append(" ");
                 }
-                Main.MOTD = message.toString();
-
-                try {
-                    FileWriter isOp_file_writer = new FileWriter(main.motdtxt);
-                    isOp_file_writer.write(Main.MOTD);
-                    isOp_file_writer.close();
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
-
-            } else {
-                Main.MOTD = "";
-                main.motdtxt.delete();
             }
 
-        });
+            try{
+                int row = Integer.parseInt(args[0]);
+
+                if (row == 1 || row == 2){
+                    List<String> motd = Main.config.getStringList("motd");
+                    motd.set(row - 1, message.toString());
+                    Main.config.set("motd", motd);
+                    main.saveConfig();
+                    main.reloadConfig();
+                } else {
+                    return false;
+                }
+            }catch (NumberFormatException e){
+                return false;
+            }
+
+        }
         return true;
     }
 }
