@@ -1,18 +1,15 @@
-package org.arkadst.tempmotd;
+package org.arkadst.tempmotd
 
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.ServerListPingEvent;
+import org.bukkit.event.server.ServerListPingEvent
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 
-import java.util.List;
-
-public class EventListener implements Listener {
+class EventListener : Listener {
 
     @EventHandler
-    public void onPing(ServerListPingEvent event){
-        List<String> motd = Main.config.getStringList("motd");
-        event.motd(LegacyComponentSerializer.legacyAmpersand().deserialize(motd.get(0) + '\n' + motd.get(1)));
+    fun onPing(event: ServerListPingEvent) {
+        val motd = Main.configuration.getStringList("motd")
+        event.motd(LegacyComponentSerializer.legacyAmpersand().deserialize("${motd[0]}\n${motd[1]}"))
     }
-
 }

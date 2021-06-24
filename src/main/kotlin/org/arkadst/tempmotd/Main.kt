@@ -1,30 +1,24 @@
-package org.arkadst.tempmotd;
+package org.arkadst.tempmotd
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-import java.io.File;
+import org.bukkit.plugin.java.JavaPlugin
+import java.io.File
+import org.bukkit.configuration.file.FileConfiguration
 
-public class Main extends JavaPlugin {
-
-    public static FileConfiguration config;
-
-    @Override
-    public void onEnable() {
-        if (!(new File(getDataFolder(), "config.yml")).exists()) {
-            saveDefaultConfig();
+class Main : JavaPlugin() {
+    override fun onEnable() {
+        if (!File(dataFolder, "config.yml").exists()) {
+            saveDefaultConfig()
         }
-
-        config = getConfig();
-
-        getServer().getPluginManager().registerEvents(new EventListener(), this);
-
-        getCommand("tempmotd").setExecutor(new TempMOTDCommand(this));
-        getCommand("setmotd").setExecutor(new SetMOTDCommand(this));
+        Companion.configuration = config
+        server.pluginManager.registerEvents(EventListener(), this)
+        getCommand("tempmotd")!!.setExecutor(TempMOTDCommand(this))
+        getCommand("setmotd")!!.setExecutor(SetMOTDCommand(this))
     }
 
-    @Override
-    public void onDisable() {
+    override fun onDisable() {}
 
+
+    companion object {
+        lateinit var configuration: FileConfiguration
     }
-
 }

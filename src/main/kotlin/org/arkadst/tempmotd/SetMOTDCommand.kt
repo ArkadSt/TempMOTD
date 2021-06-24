@@ -1,52 +1,40 @@
-package org.arkadst.tempmotd;
+package org.arkadst.tempmotd
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+import java.lang.StringBuilder
+import java.lang.NumberFormatException
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+class SetMOTDCommand(private var main: Main) : CommandExecutor {
 
-public class SetMOTDCommand implements CommandExecutor {
-
-    Main main;
-    public SetMOTDCommand(Main main){
-        this.main = main;
-    }
-
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
-        if (args.length >= 1) {
-            StringBuilder message = new StringBuilder();
-            for (int x = 1; x < args.length; x++) {
-                message.append(args[x]);
-                if (x != args.length - 1) {
-                    message.append(" ");
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
+        val motd = Main.configuration.getStringList("motd")
+        if (args.isNotEmpty()) {
+            val message = StringBuilder()
+            for (x in 1 until args.size) {
+                message.append(args[x])
+                if (x != args.size - 1) {
+                    message.append(" ")
                 }
             }
-
-            try{
-                int row = Integer.parseInt(args[0]);
-
-                if (row == 1 || row == 2){
-                    List<String> motd = Main.config.getStringList("motd");
-                    motd.set(row - 1, message.toString());
-                    Main.config.set("motd", motd);
-                    main.saveConfig();
-                    main.reloadConfig();
+            try {
+                val row = args[0].toInt()
+                if (row == 1 || row == 2) {
+                    motd[row - 1] = message.toString()
+                    Main.configuration.set("motd", motd)
+                    main.saveConfig()
+                    main.reloadConfig()
+                    Main.configuration = main.config
                 } else {
-                    return false;
+                    return false
                 }
-            }catch (NumberFormatException e){
-                return false;
+            } catch (e: NumberFormatException) {
+                return false
             }
-
+        } else {
+            return false
         }
-        return true;
+        return true
     }
 }

@@ -1,36 +1,26 @@
-package org.arkadst.tempmotd;
+package org.arkadst.tempmotd
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.ChatColor
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
 
-public class TempMOTDCommand implements CommandExecutor {
-
-    Main main;
-
-    public TempMOTDCommand(Main main) {
-        this.main = main;
-    }
-
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) {
-            switch (args[0]) {
-                case "reload":
-                    main.reloadConfig();
-                    Main.config = main.getConfig();
-                    sender.sendMessage(ChatColor.GREEN + "[TempMOTD] Configuration was reloaded successfully.");
-                    break;
-                default:
-                    sender.sendMessage(ChatColor.RED + "[TempMOTD] No such command.");
-                    break;
+class TempMOTDCommand(private var main: Main) : CommandExecutor {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
+        if (args.size == 1) {
+            when (args[0]) {
+                "reload" -> {
+                    main.reloadConfig()
+                    Main.configuration = main.config
+                    sender.sendMessage(ChatColor.GREEN.toString() + "[TempMOTD] Configuration was reloaded successfully.")
+                }
+                else -> {
+                    sender.sendMessage(ChatColor.RED.toString() + "[TempMOTD] No such command.")
+                }
             }
-
         } else {
-            sender.sendMessage(ChatColor.RED + "[TempMOTD] No such command.");
+            sender.sendMessage(ChatColor.RED.toString() + "[TempMOTD] No such command.")
         }
-        return true;
+        return true
     }
 }

@@ -2,7 +2,7 @@ name: TempMOTD
 author: ArkadSt
 version: 1.0
 main: org.arkadst.tempmotd.Main
-api-version: 1.16
+api-version: 1.17
 
 commands:
   tempmotd:
