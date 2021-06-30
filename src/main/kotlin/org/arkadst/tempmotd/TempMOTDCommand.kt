@@ -5,13 +5,12 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
-class TempMOTDCommand(private var main: Main) : CommandExecutor {
+class TempMOTDCommand(private val main: Main) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (args.size == 1) {
             when (args[0]) {
                 "reload" -> {
                     main.reloadConfig()
-                    Main.configuration = main.config
                     sender.sendMessage(ChatColor.GREEN.toString() + "[TempMOTD] Configuration was reloaded successfully.")
                 }
                 else -> {
