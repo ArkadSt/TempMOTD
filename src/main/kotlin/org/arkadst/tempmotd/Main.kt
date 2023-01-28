@@ -2,7 +2,6 @@ package org.arkadst.tempmotd
 
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
-import org.bukkit.configuration.file.FileConfiguration
 
 class Main : JavaPlugin() {
 

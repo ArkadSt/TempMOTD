@@ -1,8 +1,6 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.5.20"
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    kotlin("jvm") version "1.8.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "org.arkadst"
@@ -17,13 +15,13 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    compileOnly("io.papermc.paper:paper-api:1.17-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 }
 
 tasks.test {
-    useTestNG()
+    useJUnitPlatform()
 }
 
-tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "16"
+kotlin {
+    jvmToolchain(17)
 }
